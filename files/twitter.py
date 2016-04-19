@@ -9,3 +9,4 @@ class Tweet(object):
         self.follower_count = tweet_dict['user']['followers_count']
         self.screen_name = tweet_dict['user']['screen_name']
         self.freinds = tweet_dict['user']['friends_count']
+        
