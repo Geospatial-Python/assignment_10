@@ -15,6 +15,7 @@ class View(QtGui.QMainWindow):
 	#	self.setGeometry(300, 300, 400, 325)
 		self.setWindowTitle('Tweets on a Map!')
 		self.map_loc = 'map.html'
+		self.setWindowIcon(QtGui.QIcon('small.png'))		
 		
 		self.web_view = QtWebKit.QWebView()
 		self.map = folium.Map(location=[33.4255, -111.9400], zoom_start=12)
@@ -39,25 +40,17 @@ class View(QtGui.QMainWindow):
 		tweets = []
 		for twit in tweet_dic:
 			tweets.append(tweet.Tweet(twit))
-		
-		avg_lat = 0
-		avg_lng = 0
-		i = 0
 
 		#print(tweets[1].user)
 		for twet in tweets:
-			lat = twet.lat[0]
+			lat = twet.lat[1]
 			lng = twet.lng[0]
-			avg_lat += lat
-			avg_lng += lng
-			i += 1
 
 			folium.Marker([lat, lng], popup=twet.user).add_to(self.map)
 
-		#self.map.location((avg_lat / i), (avg_lng / i))
 		self.map.save(self.map_loc)
 		self.web_view.load(QtCore.QUrl(self.map_loc))
-		
+		print(len(tweets))		
 
 def main():
 	app = QtGui.QApplication(sys.argv)
