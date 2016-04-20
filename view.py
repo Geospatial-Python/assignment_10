@@ -15,6 +15,7 @@ class Ui_MainWindow(object):
         self.MainWindow.resize(434, 316)
 
         self.map = folium.Map(location=phx_coords)
+        self.map.zoom_start = 8
         self.mapFile = "osm_map.html"
         self.map.save(self.mapFile)
 
@@ -28,7 +29,7 @@ class Ui_MainWindow(object):
 
         # place widgets here
         self.webView = QtWebKitWidgets.QWebView(MainWindow)
-        self.webView.load(QtCore.QUrl(self.mapFile))
+        self.webView.setHtml(open(self.mapFile,'r').read())
 
 
 
@@ -82,14 +83,15 @@ class Ui_MainWindow(object):
 
         # create new map for new file
         self.map = folium.Map(location=phx_coords)
+        self.map.zoom_start = 8
 
         for tw in tweetObjs:
             latitude, longitude = tw.getRandPointInBoundingBox()
             folium.Marker([latitude, longitude], popup=tw.twScreenName).add_to(self.map)
 
         self.map.save(self.mapFile)
-        self.webView.setUrl(QtCore.QUrl(self.mapFile))
-        self.MainWindow.setCentralWidget(self.webView)
+        self.webView.setHtml(open(self.mapFile,'r').read())
+
 
 
 
