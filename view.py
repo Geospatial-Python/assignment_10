@@ -33,7 +33,9 @@ class View(QtGui.QMainWindow):
         self.popup = None
 
     def init_ui(self):
-        # This is the central empty widget, to be replaced in a future assignment.
+        # The map will be saved in a temporary directory. Make sure it exists.
+        os.makedirs('tmp', exist_ok=True)
+        
         self.web_view = QtWebKit.QWebView()
         self.map = folium.Map(location=[33.4484, -112.0740])
         self.map.zoom_start = 10
@@ -41,9 +43,6 @@ class View(QtGui.QMainWindow):
         self.map.save(self.map_dir)
         self.web_view.load(QtCore.QUrl(self.map_dir))
         self.setCentralWidget(self.web_view)
-
-        # The map will be saved in a temporary directory. Make sure it exists.
-        os.makedirs('tmp', exist_ok=True)
 
         # Define the exit action for use in the toolbar and file menu.
         exit_action = QtGui.QAction(QtGui.QIcon('exit-24.png'), 'Exit', self)
