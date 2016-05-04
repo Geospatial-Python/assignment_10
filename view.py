@@ -35,7 +35,7 @@ class View(QtGui.QMainWindow):
         tool_bar.addAction(open_action)
 
         self.setGeometry(100, 100, 600, 600)
-        self.setWindowTitle('Main Window')
+        self.setWindowTitle('Arizona Tweet Map')
         self.show()
 
 
