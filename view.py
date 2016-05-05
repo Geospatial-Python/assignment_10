@@ -39,7 +39,8 @@ class View(QtGui.QMainWindow):
         self.map_dir = 'temp/folium_map.html' #so it knows where to save
 
         #now embed the folium map
-        self.map = folium.Map(location=[-112.323914,-33.29026],zoom_start=10)
+        #self.map = folium.Map(location=[-112.323914,-33.29026],zoom_start=10)
+        self.map = folium.Map(location=[33.29026,-112.323914],zoom_start=10)
         self.map.save(self.map_dir)
         self.web_view.load(QtCore.QUrl(self.map_dir))
 
@@ -82,6 +83,7 @@ class View(QtGui.QMainWindow):
         self.move(qr.topLeft())
 
     def openAndDisplayMarkers(self):
+        print("openAndDisplayMarkers")
         file = QtGui.QFileDialog.getOpenFileName(self,caption='Open tweet file',filter='*.json') # for only json's
         if not file: #nothing selected, can't do anything
             return;
@@ -95,8 +97,11 @@ class View(QtGui.QMainWindow):
         #array to actually create the markers and get the latitude/longitude values from the points:
         long_sum = 0
         lat_sum = 0
+        i = 0
         for t1 in tweets: #Going through each Tweet class element
-            markerPoint = [t1.longitude,t1.latitude]
+            markerPoint = [t1.latitude,t1.longitude]
+            if i < 5:
+                print(markerPoint)
             #now create the actual marker:
             markerToAdd = folium.Marker(markerPoint)
             markerToAdd.add_to(self.map)
@@ -105,6 +110,7 @@ class View(QtGui.QMainWindow):
             #as you go through all the points:
             long_sum = long_sum + markerPoint[0]
             lat_sum = lat_sum + markerPoint[1]
+            i = i + 1
 
         mean_center_long = long_sum/len(tweets)
         mean_center_lat = lat_sum/len(tweets)
