@@ -1,10 +1,10 @@
 #Create a new Tweet class or extend the existing Point class to store:
-
+import src.point
 class Tweet(object):
-    def __init__(self,tweet_dictionary): #wanna pass in the tweet dictionary so that you can actually store it
+    def __init__(self,tweet_dictionary):
+        #want pass in the tweet dictionary so that you can actually store it
         #the tweet text:
-        self.tweet = tweet_dictionary['text'] # get the "text field"
-
+        self.tweetText = tweet_dictionary['text'] # get the "text field"
         if tweet_dictionary['geo'] is None: #(long,lat)
             #then get the data from the bounding box, pick a point from there:
             self.longitude = tweet_dictionary['place']['bounding_box']['coordinates'][0][0]
@@ -15,6 +15,7 @@ class Tweet(object):
             self.longitude = tweet_dictionary['geo']['coordinates'][0]
             self.latitude = tweet_dictionary['geo']['coordinates'][1]
 
+        self.geoPoint = src.point.Point(self.latitude,self.longitude)
         #now pick 3 other interesting ones:
         self.user_name = tweet_dictionary['user']['screen_name']
         self.follower_count = ['user']['followers_count']
