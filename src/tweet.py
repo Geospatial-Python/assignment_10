@@ -1,5 +1,8 @@
 #Create a new Tweet class or extend the existing Point class to store:
 import src.point
+import numpy as np
+import random
+
 class Tweet(object):
     def __init__(self,tweet_dictionary):
         #want pass in the tweet dictionary so that you can actually store it
@@ -18,11 +21,32 @@ class Tweet(object):
 
         else:
         #then get the data from the bounding box, pick a point from there:
-            self.longitude = tweet_dictionary['place']['bounding_box']['coordinates'][0][0][0]
-            self.latitude = tweet_dictionary['place']['bounding_box']['coordinates'][0][0][1]
-            print("long and lat: ")
-            print(self.longitude)
-            print(self.latitude)
+            print("bounding box")
+            print(tweet_dictionary['place']['bounding_box']['coordinates'])
+            print(tweet_dictionary['place']['bounding_box']['coordinates'][0])
+            #coordinates[0] = [[-111.842244, 33.204608], [-111.842244, 33.385822], [-111.634889, 33.385822], [-111.634889, 33.204608]]
+
+
+            #So, the trick is to get the minimum and maximum values from the bounding box:
+            toStack = tweet_dictionary['place']['bounding_box']['coordinates'][0]
+            coorStack = np.vstack(toStack)
+            #now find the max and min of the longitude/latitude
+            coorMax = np.amax(coorStack,axis=0) #[x,y]
+            coorMin = np.amin(coorStack,axis=0)
+
+            #now randomly distribute the points within the polygon:
+            self.longitude = random.uniform(coorMin[0],coorMax[0])
+            self.latitude = random.uniform(coorMin[1],coorMax[1])
+
+          #  self.longitude = tweet_dictionary['place']['bounding_box']['coordinates'][0][0][0]
+        #    self.latitude = tweet_dictionary['place']['bounding_box']['coordinates'][0][0][1]
+
+
+
+
+        print("long and lat: ")
+        print(self.longitude)
+        print(self.latitude)
 
 
         self.geoPoint = src.point.Point(self.latitude,self.longitude)
