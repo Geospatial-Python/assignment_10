@@ -112,6 +112,7 @@ class View(QtGui.QMainWindow):
             lat_sum = lat_sum + markerPoint[1]
             i = i + 1
 
+        print(len(tweets))
         mean_center_long = long_sum/len(tweets)
         mean_center_lat = lat_sum/len(tweets)
         mean_center = [mean_center_long,mean_center_lat]
