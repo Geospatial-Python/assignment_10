@@ -1,3 +1,8 @@
+Note: Used composition in this case because the Tweet has a geographical location (x,y) not is a geographical location (x,y)
+
+
+
+
 # Week 13 Deliverables (E9) - Due 4/19/16
 For this week make sure that you have completed the following:
 * Fork Assignment 10 to your own github repository.
